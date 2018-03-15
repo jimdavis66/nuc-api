@@ -1,0 +1,22 @@
+{
+  "name": "nuc-api",
+  "version": "1.0.0",
+  "description": "Basic API to control my Intel NUC media center",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jimdavis66/nuc-api.git"
+  },
+  "author": "James Davis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jimdavis66/nuc-api/issues"
+  },
+  "homepage": "https://github.com/jimdavis66/nuc-api#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
