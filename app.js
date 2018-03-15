@@ -5,7 +5,8 @@ const config = require('./config');
 
 let ps = new shell({
   executionPolicy: 'Bypass',
-  noProfile: true
+  noProfile: true,
+  debugMsg: false
 })
 
 // initialise app
@@ -24,10 +25,21 @@ app.get('/radio', (req, res, next) => {
 
 app.post('/radio/:action', (req, res, next) => {
   if(req.params.action === 'on') {
-    res.send('Turn radio on');
-    ps.addCommand('Write-Host node-powershell');
+    // Turn radio on
+    ps.addCommand('C:\\Scripts\\launchABCradio.ps1');
+    ps.invoke().then(output => {
+      res.send('OK');
+    }).catch(err => {
+      res.send(err);
+    });
   } else if (req.params.action === 'off') {
-    res.send('Turn radio off');
+    // Turn radio off
+    ps.addCommand('C:\\Scripts\\killABCradio.ps1');
+    ps.invoke().then(output => {
+      res.send('OK');
+    }).catch(err => {
+      res.send(err);
+    });
   } else {
     res.status(404).send();
   }
