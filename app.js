@@ -26,7 +26,7 @@ app.get('/radio', (req, res, next) => {
 app.post('/radio/:action', (req, res, next) => {
   if(req.params.action === 'on') {
     // Turn radio on
-    ps.addCommand('.\\scripts\\launchABCradio.ps1');
+    ps.addCommand(config.workingDir + '.\\scripts\\launchABCradio.ps1');
     ps.invoke().then(output => {
       res.send('OK');
     }).catch(err => {
@@ -34,7 +34,7 @@ app.post('/radio/:action', (req, res, next) => {
     });
   } else if (req.params.action === 'off') {
     // Turn radio off
-    ps.addCommand('.\\scripts\\killABCradio.ps1');
+    ps.addCommand(config.workingDir + '.\\scripts\\killABCradio.ps1');
     ps.invoke().then(output => {
       res.send('OK');
     }).catch(err => {
