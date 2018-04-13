@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const shell = require('node-powershell');
+const schedule = require('node-schedule');
 const config = require('./config');
 
 let ps = new shell({
@@ -9,7 +10,27 @@ let ps = new shell({
   debugMsg: false
 })
 
-// initialise app
+// run on a daily schedule, 5:15AM - 8:00AM
+var startRadio = schedule.scheduleJob('0 15 5 * * *', function(){
+  // Turn radio on
+  ps.addCommand(config.workingDir + '.\\scripts\\launchABCradio.ps1');
+  ps.invoke().then(output => {
+    console.log('Radio started on schedule');
+  }).catch(err => {
+    console.log(err);
+  });
+});
+var stopRadio = schedule.scheduleJob('0 0 8 * * *', function(){
+  // Turn radio off
+  ps.addCommand(config.workingDir + '.\\scripts\\killABCradio.ps1');
+  ps.invoke().then(output => {
+    console.log('Radio stopped on schedule');
+  }).catch(err => {
+    console.log(err);
+  });
+});
+
+// initialise express app
 const app = express();
 
 // load middleware
